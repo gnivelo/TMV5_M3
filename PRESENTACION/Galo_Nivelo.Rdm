@@ -1,0 +1,83 @@
+---
+title: "PETROAMAZONAS"
+author: "Galo Nivelo"
+date: "29 de Septiembre de 2019"
+output:
+  slidy_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## PETROAMAZONAS - LA EMPRESA
+
+Valores
+
+    * Integridad y Transparencia
+    * Solidaridad
+    * Responsabilidad Social y Ambiental
+    * Calidad Profesional y Trabajo en Equipo
+    * Innovación
+
+Misión
+    
+    Desarrollar actividades estratégicas de exploración y explo-
+    tación  de hidrocarburos, de manera íntegra, eficiente, sus-
+    tentable y  segura, con  responsabilidad social y ambiental, 
+    bajo el marco de prácticas antisoborno y anticorrupción, con
+    el aporte del mejor talento humano para contribuir  al desa-
+    rrollo energético del Ecuador.
+
+Visión
+
+    Ser  la  Empresa referente del Estado ecuatoriano y líder de la 
+    industria de exploración y explotación de hidrocarburos a nivel 
+    nacional y  regional, por nuestra eficiencia, integridad y con-
+    fiabilidad,  a la vanguardia de la responsabilidad social y am-
+    biental;  cumpliendo  a cabalidad el principio de Petroamazonas 
+    EP respecto a la cero tolerancia ante actos de soborno y corrup
+    ción de cualquier índole.
+
+https://www.petroamazonas.gob.ec/
+
+## agenda de la presentación
+
+- Ejemplo de Datos
+- Resumen de Valores
+- Correlacion de variables
+<center>![PetroAmazonas](https://www.petroamazonas.gob.ec/wp-content/uploads/2017/11/te-acompan%CC%83a-2-01-768x301.jpg)</center> 
+
+## Muestra de sueldos
+
+```{r df, message=FALSE, echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+df <- read.csv("C:/Galo/R/DeberMod3/dataPetro2017.csv",header = TRUE)
+df$Num <- as.character( df$Num)
+df$Escala <- as.character(df$Escala)                      
+df$Sueldo <- as.numeric( df$Sueldo)
+df$SueldoAnual <- as.numeric( df$SueldoAnual)
+df$HorasSupl <- as.numeric( df$HorasSupl)
+df$Encargos <- as.numeric( df$Encargos)
+df$Adicionales <- as.numeric( df$Adicionales)
+
+datos <- select(df,PuestoInst,Sueldo,HorasSupl,Encargos,Adicionales)
+datosSum <- select(df,PuestoInst,Sueldo,Adicionales)
+head(datosSum,20)
+```
+
+
+## Resumen de valores
+
+```{r datosSum}
+summary(datosSum)
+```
+
+## Correlacion entre variables
+
+```{r datosSum2}
+plot(datosSum)
+```
+
