@@ -1,0 +1,88 @@
+---
+title: "Petroamazonas - Octubre 2017"
+author: "Galo Nivelo"
+output: html_document
+---
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Remuneracion Mensual
+
+El informe contiene descripción con el detalle de la remuneración y todos los ingresos adicionales de los puestos o posiciones de la institución:
+
+### <span style="color:blue">PETROAMAZONAS EP</span>
+
+
+<center>![PetroAmazonas](https://www.petroamazonas.gob.ec/wp-content/uploads/2019/08/Banner%20Lite%20Indicadores%20de%20Gestio%CC%81n-01.jpg)</center> 
+  
+Petroamazonas EP alcanzó en el 2018, una producción de 148 millones de barriles equivalentes de petróleo y un costo total por barril de USD 17,99/BEP, con una ejecución presupuestaria de USD 2.671 millones. Estas cifras, representan una disminución de USD 2.064 millones en relación al presupuesto que manejó en el año 2014 y USD 11,29/BEP menos en relación a los USD 29,28/BEP de costo total por barril de ese mismo año
+
+
+<span style="color:blue">Resumen de datos tabulados</span>
+```{r message=F, echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+df <- read.csv("C:/Galo/R/DeberMod3/dataPetro2017.csv",header = TRUE)
+df$Num <- as.character( df$Num)
+df$Escala <- as.character(df$Escala)                      
+df$Sueldo <- as.numeric( df$Sueldo)
+df$SueldoAnual <- as.numeric( df$SueldoAnual)
+df$HorasSupl <- as.numeric( df$HorasSupl)
+df$Encargos <- as.numeric( df$Encargos)
+df$Adicionales <- as.numeric( df$Adicionales)
+
+datos <- select(df,PuestoInst,Sueldo,HorasSupl,Encargos,Adicionales)
+datosSum <- select(df,PuestoInst,Sueldo,Encargos,Adicionales)
+head(datosSum,20)
+summary(datosSum)
+```
+
+
+## Gráfico de histograma de sueldos
+
+```{r message=F, echo=FALSE, warning=FALSE}
+
+ggplot(df, aes(x = Sueldo/100)) + 
+  xlab(label = 'Sueldo \n(Sueldo según funcionario)') +
+  theme_light() +
+  theme(panel.background = element_rect(fill = "lightblue"),
+        plot.background = element_rect(colour = "green", fill="gray"),
+        legend.background = element_rect(fill = "blue"),
+        axis.text.x =  element_text(color = "blue", angle = 60)) +
+  geom_histogram(binwidth = 0.3)
+
+```
+
+## Gráfico de Densidad
+
+
+```{r message=F, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x = Sueldo/100)) + 
+  xlab(label = 'Sueldo \n(Sueldo según funcionario)') +
+  geom_density()
+
+```
+
+
+## Gráfico de niveles de cargo
+
+Gráfico de barras
+```{r message=F, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x = factor(Escala))) + 
+  ylab(label = 'Sueldo \n(Escala de sueldos)') +
+  geom_bar(width=0.5, colour="blue", fill="red")
+```
+
+
+## Gráfico de sueldos según la Escala
+
+```{r message=F, echo=FALSE, warning=FALSE}
+ggplot(df, aes(x = Escala,  fill = Sueldo)) +
+    ylab(label = 'Sueldo \n(Sueldo según funcionario)') +
+  xlab(label = 'Escala \n(Escala de Sueldos)') +
+  geom_bar(position="dodge")
+```
+
+
